@@ -6,7 +6,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Heart, Zap, Trophy, MapPin, Star, Rocket, ArrowUpCircle, Shield, Activity, PlusCircle, Play, UtensilsCrossed } from 'lucide-react';
+import { Heart, Zap, Trophy, MapPin, Star, Rocket, ArrowUpCircle, Shield, Activity, PlusCircle, Play, UtensilsCrossed, Home } from 'lucide-react';
 import { useStore, TARGET_WORD } from '../../store';
 import { GameStatus, THEME_COLORS, ShopItem, RUN_SPEED_BASE } from '../../types';
 import { audio } from '../System/Audio';
@@ -103,7 +103,7 @@ const ShopScreen: React.FC = () => {
 };
 
 export const HUD: React.FC = () => {
-  const { score, lives, maxLives, collectedLetters, status, level, restartGame, startGame, gemsCollected, distance, isImmortalityActive, speed } = useStore();
+  const { score, lives, maxLives, collectedLetters, status, level, restartGame, startGame, gemsCollected, distance, isImmortalityActive, speed, setStatus } = useStore();
   
   const containerClass = "absolute inset-0 pointer-events-none flex flex-col justify-between p-4 md:p-8 z-50";
 
@@ -165,12 +165,20 @@ export const HUD: React.FC = () => {
                     </div>
                 </div>
 
-                <button 
-                  onClick={() => { audio.init(); restartGame(); }}
-                  className="px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold text-lg md:text-xl rounded hover:scale-105 transition-all"
-                >
-                    TRY AGAIN
-                </button>
+                <div className="flex flex-col md:flex-row gap-4 w-full max-w-md justify-center">
+                    <button 
+                      onClick={() => { audio.init(); restartGame(); }}
+                      className="flex-1 px-8 py-3 md:py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold text-lg md:text-xl rounded hover:scale-105 transition-all"
+                    >
+                        TRY AGAIN
+                    </button>
+                    <button 
+                      onClick={() => { audio.init(); setStatus(GameStatus.MENU); }}
+                      className="flex-1 px-8 py-3 md:py-4 bg-amber-950/80 border border-orange-500/50 text-orange-200 font-bold text-lg md:text-xl rounded hover:scale-105 hover:bg-amber-900 hover:text-white transition-all flex items-center justify-center"
+                    >
+                        <Home className="mr-2 w-5 h-5" /> NEW GAME
+                    </button>
+                </div>
               </div>
           </div>
       );
@@ -195,12 +203,20 @@ export const HUD: React.FC = () => {
                     </div>
                 </div>
 
-                <button 
-                  onClick={() => { audio.init(); restartGame(); }}
-                  className="px-8 md:px-12 py-4 md:py-5 bg-white text-black font-black text-lg md:text-xl rounded hover:scale-105 transition-all tracking-widest"
-                >
-                    RUN AGAIN
-                </button>
+                <div className="flex flex-col md:flex-row gap-4 w-full max-w-md justify-center">
+                    <button 
+                      onClick={() => { audio.init(); restartGame(); }}
+                      className="flex-1 px-8 py-4 md:py-5 bg-white text-black font-black text-lg md:text-xl rounded hover:scale-105 transition-all tracking-widest"
+                    >
+                        RUN AGAIN
+                    </button>
+                     <button 
+                      onClick={() => { audio.init(); setStatus(GameStatus.MENU); }}
+                      className="flex-1 px-8 py-4 md:py-5 bg-black/50 border border-white/20 text-white font-bold text-lg md:text-xl rounded hover:scale-105 transition-all tracking-widest flex items-center justify-center"
+                    >
+                        <Home className="mr-2 w-5 h-5" /> MENU
+                    </button>
+                </div>
             </div>
         </div>
     );
